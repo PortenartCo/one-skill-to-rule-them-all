@@ -54,7 +54,7 @@ observation, persistence, production monitoring, or live compatibility.
   execution-governance documents, not this public GitHub fork.
 
 This fork is PUBLIC. Never commit source conversations, technical credentials,
-customer examples, person-level data, ACP records, internal audit exports, or
+customer examples, person-level data, property records, internal audit exports, or
 private observation logs. An approved persistence design must use an existing
 authorized private store, never this public repository.
 
