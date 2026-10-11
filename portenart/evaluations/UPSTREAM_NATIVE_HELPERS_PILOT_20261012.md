@@ -31,7 +31,17 @@ La Skill amont se presente comme `task-observer` v3.6.0. Le code source est sous
 - Quatre creations simultanees dans un **second journal fictif** : codes de sortie zero, identifiants distincts, plancher non regresse.
 - Controle d'un journal `checkpoints.log` alimente par les appels de scan et de chargement.
 
-**Resultat : 36 points de controle reussis sur 36, aucun echec.** Les scripts ont ete executes comme des processus distincts ; les fichiers factices ont ete retrouves apres leur terminaison. Un second banc portable Bash a egalement retourne `UPSTREAM_NATIVE_SMOKE=PASS`.
+**Resultat : 36 points de controle reussis sur 36, aucun echec.** Les scripts ont ete executes comme des processus distincts ; les fichiers factices ont ete retrouves apres leur terminaison. Le banc portable Python, valide sur les memes scripts, est publie dans [`portenart/tests/upstream-native-smoke.py`](../tests/upstream-native-smoke.py) et renvoie `PASS`, `checks=36`, `failed=0`, `sandbox_removed=true`. Un second banc Bash local a egalement retourne `UPSTREAM_NATIVE_SMOKE=PASS`. La source Python publiee et celle executee sont byte-identiques (Git blob `b7df06d4ba7557d6339609bdc8aafb4ad023d5b8`).
+
+## Reproduction depuis le depot GitHub
+
+Depuis le checkout de cette PR, sous Linux avec Bash, Python 3 et les outils POSIX usuels :
+
+```sh
+python3 portenart/tests/upstream-native-smoke.py
+```
+
+Le banc n'installe aucune dependance, invoque les scripts originaux dans des processus recevant un environnement minimal explicite, cree ses seuls journaux fictifs dans `/tmp` et supprime le repertoire temporaire apres execution. N'utilise aucun email, aucune source Portenart reelle, aucune API.
 
 ## Controle de risque
 
