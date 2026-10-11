@@ -31,7 +31,7 @@ La Skill amont se presente comme `task-observer` v3.6.0. Le code source est sous
 - Quatre creations simultanees dans un **second journal fictif** : codes de sortie zero, identifiants distincts, plancher non regresse.
 - Controle d'un journal `checkpoints.log` alimente par les appels de scan et de chargement.
 
-**Resultat : 36 points de controle reussis sur 36, aucun echec.** Les scripts ont ete executes comme des processus distincts ; les fichiers factices ont ete retrouves apres leur terminaison. Le banc portable Python, valide sur les memes scripts, est publie dans [`portenart/tests/upstream-native-smoke.py`](../tests/upstream-native-smoke.py) et renvoie `PASS`, `checks=36`, `failed=0`, `sandbox_removed=true`. Un second banc Bash local a egalement retourne `UPSTREAM_NATIVE_SMOKE=PASS`. La source Python publiee et celle executee sont byte-identiques (Git blob `b7df06d4ba7557d6339609bdc8aafb4ad023d5b8`).
+**Resultat : 36 points de controle reussis sur 36, aucun echec.** Les scripts ont ete executes comme des processus distincts ; les fichiers factices ont ete retrouves apres leur terminaison. Le banc portable Python, valide sur les memes scripts, est publie dans [`portenart/tests/upstream-native-smoke.py`](../tests/upstream-native-smoke.py) et renvoie `PASS`, `checks=36`, `failed=0`, `sandbox_removed=true`. Un second banc Bash local a egalement retourne `UPSTREAM_NATIVE_SMOKE=PASS`. **Le banc Python portable a ensuite ete relance trois fois de suite : 36/36 PASS a chaque passage**, avec suppression de son repertoire temporaire confirmee a chaque fois. La source Python publiee et celle executee sont byte-identiques (Git blob `b7df06d4ba7557d6339609bdc8aafb4ad023d5b8`).
 
 ## Reproduction depuis le depot GitHub
 
