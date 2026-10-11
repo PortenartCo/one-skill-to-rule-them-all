@@ -1,0 +1,6 @@
+# Public fork: prevent accidental staging of local observation artefacts.
+skill-observations/
+skill-updates/
+logs/
+*.local.json
+*.secret
