@@ -60,19 +60,28 @@ authorized private store, never this public repository.
 
 ## Next gate
 
-**Before launching any Codex task**, create a clean Cloud environment
-containing only this GitHub fork as described in
-[evaluations/CODEX_CLOUD_ENVIRONMENT_SETUP.md](evaluations/CODEX_CLOUD_ENVIRONMENT_SETUP.md).
-A first Codex attempt ended with `REVIEW_NOT_RUN` because its checkout was
-not this repository. The corrected independent fresh-session mission is in
-[evaluations/CODEX_CLOUD_REVIEW_MISSION.md](evaluations/CODEX_CLOUD_REVIEW_MISSION.md)
-with its [report contract](evaluations/REPORT_TEMPLATE.md). Publishing a
-mission does **not** start a Codex task, activate a Skill, or prove that the
-upstream Task Observer runs in Codex.
+Earlier Codex Cloud review attempts remain `REVIEW_NOT_RUN`: although the
+correct checkout was eventually verified, effective runtime network/secret/
+connector isolation was not independently certified. Do **not** repeat a
+full Cloud review under the same uncertain restrictions.
+The previous [setup instructions](evaluations/CODEX_CLOUD_ENVIRONMENT_SETUP.md),
+[code-review mission](evaluations/CODEX_CLOUD_REVIEW_MISSION.md), and
+[report template](evaluations/REPORT_TEMPLATE.md) are retained as historical
+scope documents, not evidence of a completed Cloud test.
 
 **Genuine upstream helper pilot (synthetic sandbox):** [report](evaluations/UPSTREAM_NATIVE_HELPERS_PILOT_20261012.md) and [reproducible script](tests/upstream-native-smoke.py). Genuine source scripts for logging, startup scan and skill lookup passed their isolated tests; this does not activate Task Observer in Codex/ChatGPT or authorize live observation.
 
-The [next opt-in agent-session protocol](evaluations/OPT_IN_AGENT_SESSION_PILOT.md) is a non-executed specification for a separate, connector-free and credential-free synthetic workspace. It is not an installed Skill or an automatic observer.
+A new [two-process synthetic handoff runner](tests/two-process-agent-preflight.py)
+has passed five local repetitions, plus three separate negative controls.
+It proves cross-process journal continuity, not any model or agent invocation.
+
+The [next opt-in agent-session protocol](evaluations/OPT_IN_AGENT_SESSION_PILOT.md)
+and copy-ready [Session A](evaluations/OPT_IN_AGENT_SESSION_A_PROMPT.md) and
+[Session B](evaluations/OPT_IN_AGENT_SESSION_B_PROMPT.md) prompts are
+**prepared but not executed**. They require an independently isolated,
+credential-free, connector-free task environment and deliberately shared
+private synthetic workspace. A published prompt is not a Skill installation
+or automatic observer.
 
 See [REVIEW_GATE.md](REVIEW_GATE.md). Review the staged code, select one bounded
 platform (Codex or ChatGPT) for an opt-in integration trial, validate actual
