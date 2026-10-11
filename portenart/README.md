@@ -60,7 +60,11 @@ authorized private store, never this public repository.
 
 ## Next gate
 
-The independent fresh-session Codex review is specified in
+**Before launching any Codex task**, create a clean Cloud environment
+containing only this GitHub fork as described in
+[evaluations/CODEX_CLOUD_ENVIRONMENT_SETUP.md](evaluations/CODEX_CLOUD_ENVIRONMENT_SETUP.md).
+A first Codex attempt ended with `REVIEW_NOT_RUN` because its checkout was
+not this repository. The corrected independent fresh-session mission is in
 [evaluations/CODEX_CLOUD_REVIEW_MISSION.md](evaluations/CODEX_CLOUD_REVIEW_MISSION.md)
 with its [report contract](evaluations/REPORT_TEMPLATE.md). Publishing a
 mission does **not** start a Codex task, activate a Skill, or prove that the
