@@ -119,13 +119,32 @@ final report.
 - If `git` checks or isolation probes are blocked: report `UNVERIFIED`;
   do not compensate by cloning elsewhere, changing permissions, or
   broadening access.
-- Running Node synthetic tests is permitted only after the preflight is
-  satisfied and the prescribed tool restrictions are verifiable.
+- For this **synthetic-only** review, a published runtime with restricted
+  egress ENFORCED, just the intended accessible repo, no secrets/outbound
+  identities or privileged capabilities, the correct source hashes, and a
+  clean Git checkout is sufficient to begin the allowlisted Node tests.
+  A writable OS workspace is **not** a reason to stop: the tests create
+  and remove a temporary directory outside the repository.
+  A missing visible task identifier is a reporting limitation, not a
+  reason to reject an otherwise verified published Cloud runtime.
+  Do NOT claim the OS filesystem is immutable or that complete action
+  traces exist if those guarantees cannot be demonstrated.
 
-The correct first-run outcome is a factual report. Successful synthetic
-tests do **not** prove the upstream Task Observer Skill activates in
-Codex. Installation, observation capture, persistent storage, private
-business data, or Skill mutation require separate approval.
+Before and after tests, check the working tree and untracked files;
+reconfirm the three pilot hashes. Temporary writes under the OS temp
+directory are allowed; persistent checkout changes and all external
+writes are prohibited. An unexpected modification is a FAIL; preserve
+evidence and do not silently revert it.
+
+If the source diff to the baseline is unavailable due to shallow Git
+history, record `SOURCE_DIFF_LIMITED=UNVERIFIED` and classify the result
+as `INDEPENDENT_CODE_REVIEW_INCOMPLETE` if tests otherwise pass, rather
+than blocking safe synthetic test execution.
+
+Successful synthetic tests do **not** prove the upstream Task Observer
+Skill activates in Codex. Installation, observation capture, persistent
+storage, private business data, or Skill mutation require separate
+approval.
 
 ## Minimal new-task prompt
 
@@ -142,7 +161,8 @@ STOP with REVIEW_NOT_RUN if the target repo is absent after that check,
 the origin is wrong, or another repository is accessible.
 Only after a passing preflight, execute
 portenart/evaluations/CODEX_CLOUD_REVIEW_MISSION.md as written and
-report using portenart/evaluations/REPORT_TEMPLATE.md. Read-only,
-synthetic inputs only. No commits, pushes, PRs, external writes,
-Skill installation, hooks, merge or deployment.
+report using portenart/evaluations/REPORT_TEMPLATE.md. Synthetic-only:
+the repository and external systems remain unchanged. Temporary OS
+test-directory creation and removal are allowed. No commits, pushes,
+PRs, external writes, Skill installation, hooks, merge or deployment.
 ```
