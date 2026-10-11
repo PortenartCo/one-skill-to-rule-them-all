@@ -11,7 +11,7 @@
 | No CLI file creation in test | PASS | Child process run in empty temporary directory; listing unchanged |
 | Raw text rejection | PASS | Unexpected fields and non-synthetic class blocked |
 | Network / production / live account access | NOT TESTED | Not exercised and not authorized; no such implementation in pilot |
-| Codex fresh-session invocation | REVIEW_NOT_RUN | First Codex Cloud attempt reported wrong/non-exclusive checkout; no test executed, no target-repo status verified |
+| Codex fresh-session invocation | REVIEW_NOT_RUN | Earlier reports found wrong checkout; latest report checked only non-Git `/workspace` root, so nested checkout remains UNVERIFIED; no test executed |
 | ChatGPT Skill invocation | NOT VERIFIED | No Skill package or installation performed |
 | Human approval and canonical architecture gate | PENDING | Review and separate approval required for any actual integration |
 | Merge / deploy / hooks / schedulers / installed Skills | NO CHANGE | Explicit exclusions |
@@ -30,6 +30,24 @@ Next prerequisite: create a new Codex Cloud environment with **only**
 the correct fork selected, publish it, start a fresh task on the
 specified branch, and run the early identity/isolation preflight in
 [evaluations/CODEX_CLOUD_ENVIRONMENT_SETUP.md](evaluations/CODEX_CLOUD_ENVIRONMENT_SETUP.md).
+
+## Later attempt: non-Git workspace root (reported, not independently replayed)
+
+A further user-provided Codex report ran `git rev-parse` and `git status`
+from `/workspace` and obtained `fatal: not a git repository`. It did NOT
+inspect first-level or second-level checkout directories. Therefore it
+establishes only `WORKSPACE_ROOT_IS_GIT=NO`; `TARGET_CHECKOUT_PRESENT`,
+`SOURCE_BRANCH` and `ISOLATION_ENFORCED` remain UNVERIFIED by that attempt.
+No tests were run. Do not present this as a confirmed environment misrouting,
+nor as independent code failure.
+
+The next action is ONE bounded, metadata-only search for `.git` under
+`/workspace` (limited depth), not repeated full review or another new
+environment by default. Continue tests only if the correct checkout, origin,
+source blobs and isolation are verified. The updated
+[evaluations/CODEX_CLOUD_ENVIRONMENT_SETUP.md](evaluations/CODEX_CLOUD_ENVIRONMENT_SETUP.md)
+contains the exact controls. Do not publish private session identifiers or
+the names or contents of other repositories.
 
 ## Gate for next phase
 
