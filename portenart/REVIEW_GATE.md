@@ -1,6 +1,6 @@
 # Review gate - isolated observer pilot
 
-## Current evidence (initial local preparation and first Codex report)
+## Current evidence (offline preparation and Codex reports)
 
 | Control | Result | Evidence / limits |
 | --- | --- | --- |
@@ -11,7 +11,7 @@
 | No CLI file creation in test | PASS | Child process run in empty temporary directory; listing unchanged |
 | Raw text rejection | PASS | Unexpected fields and non-synthetic class blocked |
 | Network / production / live account access | NOT TESTED | Not exercised and not authorized; no such implementation in pilot |
-| Codex fresh-session invocation | REVIEW_NOT_RUN | Earlier reports found wrong checkout; latest report checked only non-Git `/workspace` root, so nested checkout remains UNVERIFIED; no test executed |
+| Codex fresh-session invocation | REVIEW_NOT_RUN | Bounded metadata-only discovery subsequently found no target checkout and did find another accessible repository; Cloud selection must be corrected before any test |
 | ChatGPT Skill invocation | NOT VERIFIED | No Skill package or installation performed |
 | Human approval and canonical architecture gate | PENDING | Review and separate approval required for any actual integration |
 | Merge / deploy / hooks / schedulers / installed Skills | NO CHANGE | Explicit exclusions |
@@ -41,13 +41,31 @@ establishes only `WORKSPACE_ROOT_IS_GIT=NO`; `TARGET_CHECKOUT_PRESENT`,
 No tests were run. Do not present this as a confirmed environment misrouting,
 nor as independent code failure.
 
-The next action is ONE bounded, metadata-only search for `.git` under
-`/workspace` (limited depth), not repeated full review or another new
-environment by default. Continue tests only if the correct checkout, origin,
-source blobs and isolation are verified. The updated
-[evaluations/CODEX_CLOUD_ENVIRONMENT_SETUP.md](evaluations/CODEX_CLOUD_ENVIRONMENT_SETUP.md)
-contains the exact controls. Do not publish private session identifiers or
-the names or contents of other repositories.
+The subsequent bounded discovery has now been reported by the user.
+It found no target checkout and found a different accessible repository.
+Do not retry in that task. A properly selected and PUBLISHED Cloud
+environment, with only the target GitHub fork included, followed by a
+NEW Cloud task is a required external configuration gate. Do not publish
+private session identifiers or the names or contents of other repositories.
+
+## Latest Cloud report: bounded checkout discovery (user-reported)
+
+The reviewer checked Git metadata at bounded depth under `/workspace`.
+The target fork was not among the discovered usable Git checkouts; an
+unrelated Git checkout was present. The reported verdict was
+`REVIEW_NOT_RUN`, with `SOURCE_BRANCH=UNVERIFIED`,
+`ISOLATION_ENFORCED=FAIL`, and both synthetic test stages `NOT_RUN`.
+These are reported observations, not independently authenticated
+Cloud telemetry.
+
+**No further prompt-only retry in the same environment.** First change
+the Cloud environment's **Repositories** selection in the Codex UI
+and publish it; start a fresh task from that published environment.
+If the target repository is missing from the selector, verify that the
+Codex-connected GitHub account and GitHub App installation are explicitly
+authorized for this repository. ChatGPT's separate GitHub connector
+working is not proof that Codex Cloud has the same repository access.
+Reference: https://developers.openai.com/codex/environments/cloud-environments
 
 ## Gate for next phase
 
@@ -57,4 +75,4 @@ new isolated session; (d) a private evidence and retention model if real
 signals are ever permitted; and (e) an independent diff / non-regression
 check. No test in this document proves an always-running observer.
 
-**Decision: REVIEW_NOT_RUN on first Codex Cloud attempt; READY_FOR_CODE_REVIEW once the correct exclusive environment exists; NOT READY_FOR_ACTIVATION.**
+**Decision: REVIEW_NOT_RUN after bounded Cloud preflight; ENVIRONMENT_SELECTION_HUMAN_REQUIRED; READY_FOR_CODE_REVIEW only after correct exclusive checkout; NOT READY_FOR_ACTIVATION.**
