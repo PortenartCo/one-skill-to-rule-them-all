@@ -4,7 +4,7 @@
 
 | Control | Result | Evidence / limits |
 | --- | --- | --- |
-| Isolated GitHub branch | PREPARED | Dedicated branch from fork `main`; final remote diff to verify after push |
+| Isolated GitHub branch | VERIFIED | Published and compared against fork `main`; all additions remain under `portenart/` |
 | Upstream Task Observer unchanged | DESIGNED | Only `portenart/` additions; verify with GitHub compare after push |
 | Synthetic classifier | PASS | Deterministic allowlisted schema and advisory output |
 | Offline tests | PASS | 10/10 on Node.js 22.16.0; zero failing tests |
