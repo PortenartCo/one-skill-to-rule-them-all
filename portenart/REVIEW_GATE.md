@@ -8,7 +8,7 @@
 | Upstream Task Observer unchanged | DESIGNED | Only `portenart/` additions; verify with GitHub compare after push |
 | Synthetic classifier | PASS | Deterministic allowlisted schema and advisory output |
 | Offline tests | PASS | 10/10 on Node.js 22.16.0; zero failing tests |
-| Authentic upstream helper scripts | PASS_SYNTHETIC | Three byte-identical upstream scripts; 36/36 sandbox checks (start scan, write, skill lookup, archive, ID floor, concurrency). [Evidence](evaluations/UPSTREAM_NATIVE_HELPERS_PILOT_20261012.md) |
+| Authentic upstream helper scripts | PASS_SYNTHETIC | Three byte-identical upstream scripts; 36/36 sandbox checks (start scan, write, skill lookup, archive, ID floor, concurrency). [Report](evaluations/UPSTREAM_NATIVE_HELPERS_PILOT_20261012.md) and [replay script](tests/upstream-native-smoke.py) |
 | No CLI file creation in test | PASS | Child process run in empty temporary directory; listing unchanged |
 | Raw text rejection | PASS | Unexpected fields and non-synthetic class blocked |
 | Network / production / live account access | NOT TESTED | Not exercised and not authorized; no such implementation in pilot |
