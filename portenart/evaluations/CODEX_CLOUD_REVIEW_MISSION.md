@@ -4,6 +4,13 @@
 Cloud task. This file is not an `AGENTS.md`, a Skill, a session hook, an
 automatic trigger, or a record that a task already ran.
 
+**Do not submit this task until the Cloud environment has been created and
+published for the correct repository.** Follow
+[CODEX_CLOUD_ENVIRONMENT_SETUP.md](CODEX_CLOUD_ENVIRONMENT_SETUP.md).
+The first attempted review was `REVIEW_NOT_RUN` because the workspace
+contained a different repository; naming a repository in the prompt was
+insufficient. That report is a setup failure, not a failed code test.
+
 ## Source and target
 
 - Repository: `PortenartCo/one-skill-to-rule-them-all` (PUBLIC FORK)
@@ -35,6 +42,12 @@ claiming it was enforced. Do not bypass a denial to finish the task.
 
 ## Task (READ ONLY, synthetic tests only)
 
+0. **Preflight / STOP ON WRONG CHECKOUT:** run only the non-mutating
+   repository/branch and workspace-identity checks specified in
+   [CODEX_CLOUD_ENVIRONMENT_SETUP.md](CODEX_CLOUD_ENVIRONMENT_SETUP.md).
+   If another repository is mounted, the target repo is missing, or the
+   exact branch cannot be checked, STOP with `REVIEW_NOT_RUN`. Fetching
+   the mission from GitHub does not substitute for a real checkout.
 1. Record the repository, HEAD SHA, branch, session environment and any
    available new-task identifier. If not verified, say so.
 2. Check `git status --porcelain` BEFORE running tests. Diff against the
