@@ -5,6 +5,21 @@
 Design and test artefact only. No runtime privilege, integration, new writer,
 operational task, webhook, background observer, CI automation, or Skill update.
 
+## Synthetic test filesystem scope
+
+The standalone classifier does not write files. The Node test suite does
+create and remove one disposable test directory under the operating
+system's temporary directory; this is permitted **only** for the
+synthetic test run in a correctly isolated Cloud environment.
+
+"Read-only" means the checked-out repository and all external systems
+remain unchanged. It does not require filesystem-wide immutability.
+Use a clean Git baseline, verify the three exact pilot source blob hashes,
+then recheck the working tree and untracked files after tests. If the
+tests leave any checkout change, report failure without automatically
+deleting evidence. Do not add npm packages, hooks, global instructions,
+network calls or access to Portenart business sources.
+
 ## Data minimization
 
 The public GitHub fork may contain only generic documentation, source code,
