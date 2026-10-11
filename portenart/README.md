@@ -70,6 +70,8 @@ with its [report contract](evaluations/REPORT_TEMPLATE.md). Publishing a
 mission does **not** start a Codex task, activate a Skill, or prove that the
 upstream Task Observer runs in Codex.
 
+**Genuine upstream helper pilot (synthetic sandbox):** [report](evaluations/UPSTREAM_NATIVE_HELPERS_PILOT_20261012.md) and [reproducible script](tests/upstream-native-smoke.py). Genuine source scripts for logging, startup scan and skill lookup passed their isolated tests; this does not activate Task Observer in Codex/ChatGPT or authorize live observation.
+
 See [REVIEW_GATE.md](REVIEW_GATE.md). Review the staged code, select one bounded
 platform (Codex or ChatGPT) for an opt-in integration trial, validate actual
 invocation and review mechanics in an isolated environment, and approve any
