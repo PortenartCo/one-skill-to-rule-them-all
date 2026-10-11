@@ -63,8 +63,22 @@ workspace mount names, **never source files** from other repositories.
 
 - If the target repository is not actually checked out: STOP.
 - If the workspace contains another repository: STOP, report isolation FAIL.
-- If the starting branch/commit cannot be matched to this PR: STOP and
-  report `SOURCE_BRANCH=UNVERIFIED`.
+- A Codex task may use a temporary local branch such as `work` or a
+  detached HEAD. That label alone does NOT prove the wrong source was loaded.
+  Verify the sanitized GitHub origin is this exact fork and that the pilot
+  source corresponds to the PR, either through Git commit ancestry or these
+  unchanged expected Git blob SHA-1 values (run `git hash-object <path>`
+  without `-w`, so nothing is written):
+  - `portenart/scripts/assess-observation.mjs`:
+    `4e207240c2bfa1113048d038844a896d1b4cc3ef`
+  - `portenart/tests/assess-observation.test.mjs`:
+    `d73b20def990e7d5adfbf9048a7f7849fc943c5e`
+  - `portenart/fixtures/synthetic-events.json`:
+    `806cc3a3273745b680bd201094dca190fa2a5860`
+  These identify the synthetic pilot snapshot, NOT future file revisions.
+  If origin is wrong, any blob differs, or provenance cannot be established:
+  STOP and report `SOURCE_BRANCH=UNVERIFIED`. Never repair the checkout
+  during this read-only task.
 - If source contents or tests can only be accessed by fetching standalone
   files rather than through the checked-out target repository: STOP.
 - If `git` checks or isolation probes are blocked: report `UNVERIFIED`;
