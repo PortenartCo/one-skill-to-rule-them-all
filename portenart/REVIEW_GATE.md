@@ -11,7 +11,7 @@
 | No CLI file creation in test | PASS | Child process run in empty temporary directory; listing unchanged |
 | Raw text rejection | PASS | Unexpected fields and non-synthetic class blocked |
 | Network / production / live account access | NOT TESTED | Not exercised and not authorized; no such implementation in pilot |
-| Codex fresh-session invocation | REVIEW_NOT_RUN | Bounded metadata-only discovery subsequently found no target checkout and did find another accessible repository; Cloud selection must be corrected before any test |
+| Codex fresh-session invocation | REVIEW_NOT_RUN | Latest report verifies exact fork/commit/blobs in published Cloud revision 3, with restricted egress enforced and no credentials; tests were stopped solely by immutable-filesystem requirement |
 | ChatGPT Skill invocation | NOT VERIFIED | No Skill package or installation performed |
 | Human approval and canonical architecture gate | PENDING | Review and separate approval required for any actual integration |
 | Merge / deploy / hooks / schedulers / installed Skills | NO CHANGE | Explicit exclusions |
@@ -67,6 +67,33 @@ authorized for this repository. ChatGPT's separate GitHub connector
 working is not proof that Codex Cloud has the same repository access.
 Reference: https://developers.openai.com/codex/environments/cloud-environments
 
+## Latest runtime verification — published Cloud revision (user-reported)
+
+A more recent Codex report verifies the correct fork, detached HEAD at
+`07a7d926ad986548b8d5dac1db9fc9687c0060ef`, and the three expected
+pilot blob hashes. It reports a published Cloud runtime (revision 3),
+restricted outbound network policy ENFORCED, one repository declared,
+and no secrets, outbound identities, runtime variables or privileged
+capabilities. Git status was clean both before and after preflight.
+
+Synthetic tests were NOT_RUN because the earlier mission demanded
+filesystem-wide immutability. Inspection of the actual test source
+shows it creates and removes a temporary directory in the OS temp
+location, not in the Git checkout. This strictness is unnecessary for
+a synthetic-only review. The mandate is now **corrected**: perform the
+three allowlisted local Node commands with a clean checkout and an
+enforced restricted network, permit transient OS temp writes, and
+recheck Git status/untracked files/blob hashes after tests. Neither
+file-system immutability nor an exposed fresh-task ID is a mandatory
+gate for this bounded synthetic evaluation. Report unverified
+system-wide guarantees as limits, not as proven properties.
+
+**Do not claim an installed/operational Task Observer.** Independent
+code review and all actual integration/activation gates remain separate.
+The report is user-supplied, not independently authenticated Cloud
+telemetry. Do not publish session IDs, proprietary logs or other
+repositories' identities in this public fork.
+
 ## Gate for next phase
 
 A reviewer must verify: (a) the public/private data boundary; (b) absence of a
@@ -75,4 +102,4 @@ new isolated session; (d) a private evidence and retention model if real
 signals are ever permitted; and (e) an independent diff / non-regression
 check. No test in this document proves an always-running observer.
 
-**Decision: REVIEW_NOT_RUN after bounded Cloud preflight; ENVIRONMENT_SELECTION_HUMAN_REQUIRED; READY_FOR_CODE_REVIEW only after correct exclusive checkout; NOT READY_FOR_ACTIVATION.**
+**Decision: CLOUD_SYNTHETIC_TESTS_PENDING; BOUNDED_TESTS_ALLOWED under the corrected temporary-write rule; INTEGRATION_NO_GO and ACTIVATION_NO_GO.**
