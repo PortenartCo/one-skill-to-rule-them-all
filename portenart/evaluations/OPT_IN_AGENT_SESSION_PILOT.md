@@ -7,6 +7,38 @@ The reproducible native-helper sandbox pilot passed (see
 That proves shell helper behavior, **not** the model's ability to notice an
 improvement and invoke the Skill in an agent session.
 
+## Preflight completed — two distinct OS processes, NOT two agents
+
+A new fully reproducible synthetic handoff check is provided in
+[the two-process preflight](../tests/two-process-agent-preflight.py).
+
+- It directly verifies the three original upstream helper Git blob hashes.
+- A standalone subprocess creates one fictional observation using the
+  original shell helpers; a NEW subprocess receives only the shared
+  temporary workspace path, scans its frontmatter, loads the target
+  fictional Skill and reads the existing observation.
+- The record SHA-256 remains unchanged, there are zero duplicates, and
+  the private test directory is removed at completion.
+- **Five consecutive runs PASS**, with no journal exported or kept.
+- **Three negative-path gates PASS**: a tampered helper is rejected;
+  an invalid phase is rejected; an out-of-sandbox path is rejected.
+- The published runner is byte-identical to the tested file (Git blob
+  `9580f77ff5dba17847e99aa2a8bde5045cb51877`).
+- These are **processes, not agent sessions**. No real language-model
+  invocation, automatic discovery, or persistence across genuine Cloud
+  tasks is certified.
+
+To reproduce in a Linux checkout of this fork, use Python 3.9+ and Bash:
+
+```sh
+python3 portenart/tests/two-process-agent-preflight.py
+```
+
+Separate optional agent prompts are now ready:
+[Session A](OPT_IN_AGENT_SESSION_A_PROMPT.md) and
+[Session B](OPT_IN_AGENT_SESSION_B_PROMPT.md). Do not run them in a
+credentialed or connector-enabled work environment.
+
 ## Owner and boundaries
 
 - No changes to Portenart's installed Skills, agent assignments, global
