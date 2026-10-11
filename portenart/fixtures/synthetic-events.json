@@ -1,0 +1,26 @@
+[
+  {
+    "case_id": "SYN-001",
+    "signal": "explicit_correction",
+    "evidence": "verified",
+    "occurrences": 1,
+    "owner": "operational_learning",
+    "data_class": "synthetic"
+  },
+  {
+    "case_id": "SYN-002",
+    "signal": "repeated_failure",
+    "evidence": "verified",
+    "occurrences": 3,
+    "owner": "execution_health",
+    "data_class": "synthetic"
+  },
+  {
+    "case_id": "SYN-003",
+    "signal": "unverified_idea",
+    "evidence": "reported",
+    "occurrences": 1,
+    "owner": "architecture",
+    "data_class": "synthetic"
+  }
+]
