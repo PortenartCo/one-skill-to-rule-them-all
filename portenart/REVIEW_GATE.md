@@ -9,6 +9,7 @@
 | Synthetic classifier | PASS | Deterministic allowlisted schema and advisory output |
 | Offline tests | PASS | 10/10 on Node.js 22.16.0; zero failing tests |
 | Authentic upstream helper scripts | PASS_SYNTHETIC | Three byte-identical upstream scripts; 36/36 sandbox checks (start scan, write, skill lookup, archive, ID floor, concurrency). [Report](evaluations/UPSTREAM_NATIVE_HELPERS_PILOT_20261012.md) and [replay script](tests/upstream-native-smoke.py) |
+| Two-process synthetic handoff | PASS_SYNTHETIC | Original upstream helpers in separate child processes with shared disposable journal; 5/5 repeated passes, no duplicates, unchanged observation and cleanup; 3/3 negative safety cases rejected. [Reproducible runner](tests/two-process-agent-preflight.py); this is NOT proof of distinct agent sessions |
 | No CLI file creation in test | PASS | Child process run in empty temporary directory; listing unchanged |
 | Raw text rejection | PASS | Unexpected fields and non-synthetic class blocked |
 | Network / production / live account access | NOT TESTED | Not exercised and not authorized; no such implementation in pilot |
@@ -132,7 +133,7 @@ or credentials into this public repository.
 
 ## Prochain protocole d'invocation par agent
 
-Le seul jalon restant avant de pouvoir juger un usage reel de Task Observer est un test d'agent **explicitement opt-in**, avec deux sessions sur des corrections totalement fictives, aucune Skill installee et un stockage prive approuve. Le [protocole de prochaine phase](evaluations/OPT_IN_AGENT_SESSION_PILOT.md) est prepare, mais **non execute**. Il ne certifie ni hook global ni detection autonome.
+Le relais d'observation a ete teste localement dans deux **processus distincts**, cinq fois (PASS). Les trois cas de rejet verifies ont egalement reussi. Cela ne remplace pas deux **sessions d'agent distinctes**. Le [protocole de prochaine phase](evaluations/OPT_IN_AGENT_SESSION_PILOT.md), les prompts [A](evaluations/OPT_IN_AGENT_SESSION_A_PROMPT.md) et [B](evaluations/OPT_IN_AGENT_SESSION_B_PROMPT.md) sont prets, mais **non executes par un agent**. Il manque un environnement d'agent prive, sans connecteurs privilegies ni secrets, avec journal fictif partage et provenance de sessions verifiable; aucun hook global, aucune collecte reelle.
 
 ## Gate for next phase
 
@@ -142,4 +143,4 @@ new isolated session; (d) a private evidence and retention model if real
 signals are ever permitted; and (e) an independent diff / non-regression
 check. No test in this document proves an always-running observer.
 
-**Decision: LOCAL_SYNTHETIC_TESTS=PASS; ORIGINAL_UPSTREAM_HELPERS_SYNTHETIC=PASS; CODEX_CLOUD_REVIEW=REVIEW_NOT_RUN; AGENT_SESSION_ACTIVATION=NOT_TESTED; INTEGRATION_NO_GO; ACTIVATION_NO_GO.**
+**Decision: LOCAL_SYNTHETIC_TESTS=PASS; ORIGINAL_UPSTREAM_HELPERS_SYNTHETIC=PASS; TWO_PROCESS_HANDOFF_SYNTHETIC=PASS; CODEX_CLOUD_REVIEW=REVIEW_NOT_RUN; OPT_IN_AGENT_SESSIONS=NOT_RUN; AGENT_SESSION_ACTIVATION=NOT_TESTED; INTEGRATION_NO_GO; ACTIVATION_NO_GO.**
