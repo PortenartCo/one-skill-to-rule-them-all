@@ -46,23 +46,58 @@ not create or publish an environment.
 
 ## Required Codex preflight — stop before tests on mismatch
 
-Run only read-only workspace identity checks first:
+**Do not assume the shell starts inside a Git repository.** A prompt
+starting at `/workspace` can be in a container root while the actual
+checkout, if provisioned, is a child directory. An error from
+`git rev-parse` in `/workspace` alone proves only that this directory
+is not a Git worktree; it does NOT prove the target checkout is absent.
+
+First, execute this bounded **metadata-only** discovery (POSIX shell):
 
 ```sh
 pwd
-git rev-parse --show-toplevel
-git rev-parse --abbrev-ref HEAD
-git rev-parse HEAD
-git status --porcelain
+if git rev-parse --show-toplevel >/dev/null 2>&1; then
+  git rev-parse --show-toplevel
+else
+  find /workspace -mindepth 1 -maxdepth 4 -name .git -print 2>/dev/null
+fi
 ```
 
-Check the configured repository identity against the exact fork. Do not
-print raw remote URL values if they contain userinfo or tokens; report only
-the sanitized owner/repository and GitHub host. Inspect just the immediate
-workspace mount names, **never source files** from other repositories.
+The `find` command may reveal only the paths of `.git` entries, not
+the contents of any other repository. Do not expand this scan into user
+home directories or other mounts. A `.git` path may be a worktree file
+rather than a directory; either may designate a checkout. If `find`
+is unavailable, list immediate directory names under `/workspace` and
+check `<candidate>/.git` without reading source files.
 
-- If the target repository is not actually checked out: STOP.
-- If the workspace contains another repository: STOP, report isolation FAIL.
+For a **single** candidate, use its parent directory as
+`<repo-path>` in the commands below. Do not automatically `cd`
+into unrelated checkouts:
+
+```sh
+git -C "<repo-path>" rev-parse --show-toplevel
+git -C "<repo-path>" rev-parse --abbrev-ref HEAD
+git -C "<repo-path>" rev-parse HEAD
+git -C "<repo-path>" status --porcelain
+```
+
+Check the candidate's remote origin against the exact fork, but never
+print an unsanitized remote URL; it may contain credentials. If there
+are multiple candidate repositories, confirm that no unrelated repo
+is accessible before any tests. Record only sanitized identities in the
+final report.
+
+- If `/workspace` itself is not Git, do NOT stop until this bounded
+  discovery has been attempted.
+- If the scan finds NO target candidate: stop with
+  `REVIEW_NOT_RUN`, `TARGET_CHECKOUT=UNVERIFIED` or
+  `TARGET_CHECKOUT=ABSENT_WITHIN_CHECKED_SCOPE`, as evidence allows.
+- If a wrong-origin repository is the only candidate: stop with
+  `REVIEW_NOT_RUN`, `TARGET_CHECKOUT=FAIL`.
+- If any other repository is mounted and accessible: stop with
+  `REVIEW_NOT_RUN`, `ISOLATION_ENFORCED=FAIL`.
+- Do not clone, fetch isolated files, broaden access, adjust permissions
+  or execute tests to overcome any mismatch.
 - A Codex task may use a temporary local branch such as `work` or a
   detached HEAD. That label alone does NOT prove the wrong source was loaded.
   Verify the sanitized GitHub origin is this exact fork and that the pilot
@@ -99,9 +134,12 @@ Use only the selected GitHub repository
 PortenartCo/one-skill-to-rule-them-all, branch
 codex/portenart-readonly-pilot-20261011, in a NEW isolated Codex Cloud
 task. First verify the live checkout, branch identity, and exclusive
-workspace using the preflight in
-portenart/evaluations/CODEX_CLOUD_ENVIRONMENT_SETUP.md. STOP immediately
-with REVIEW_NOT_RUN if the repo is absent, wrong or non-exclusive.
+workspace using the bounded metadata-only discovery in
+portenart/evaluations/CODEX_CLOUD_ENVIRONMENT_SETUP.md. The directory
+/workspace itself need not be a Git repository: inspect only .git entries
+within /workspace at depth <=4 before deciding there is no checkout.
+STOP with REVIEW_NOT_RUN if the target repo is absent after that check,
+the origin is wrong, or another repository is accessible.
 Only after a passing preflight, execute
 portenart/evaluations/CODEX_CLOUD_REVIEW_MISSION.md as written and
 report using portenart/evaluations/REPORT_TEMPLATE.md. Read-only,
