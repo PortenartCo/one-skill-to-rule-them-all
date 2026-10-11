@@ -8,6 +8,7 @@
 | Upstream Task Observer unchanged | DESIGNED | Only `portenart/` additions; verify with GitHub compare after push |
 | Synthetic classifier | PASS | Deterministic allowlisted schema and advisory output |
 | Offline tests | PASS | 10/10 on Node.js 22.16.0; zero failing tests |
+| Authentic upstream helper scripts | PASS_SYNTHETIC | Three byte-identical upstream scripts; 36/36 sandbox checks (start scan, write, skill lookup, archive, ID floor, concurrency). [Evidence](evaluations/UPSTREAM_NATIVE_HELPERS_PILOT_20261012.md) |
 | No CLI file creation in test | PASS | Child process run in empty temporary directory; listing unchanged |
 | Raw text rejection | PASS | Unexpected fields and non-synthetic class blocked |
 | Network / production / live account access | NOT TESTED | Not exercised and not authorized; no such implementation in pilot |
@@ -137,4 +138,4 @@ new isolated session; (d) a private evidence and retention model if real
 signals are ever permitted; and (e) an independent diff / non-regression
 check. No test in this document proves an always-running observer.
 
-**Decision: LOCAL_SYNTHETIC_TESTS=PASS; CODEX_CLOUD_REVIEW=REVIEW_NOT_RUN (environment controls unverifiable); TRUE_OBSERVER_RUNTIME=NOT_TESTED; INTEGRATION_NO_GO; ACTIVATION_NO_GO.**
+**Decision: LOCAL_SYNTHETIC_TESTS=PASS; ORIGINAL_UPSTREAM_HELPERS_SYNTHETIC=PASS; CODEX_CLOUD_REVIEW=REVIEW_NOT_RUN; AGENT_SESSION_ACTIVATION=NOT_TESTED; INTEGRATION_NO_GO; ACTIVATION_NO_GO.**
