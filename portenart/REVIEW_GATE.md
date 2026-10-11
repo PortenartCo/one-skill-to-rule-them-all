@@ -11,7 +11,7 @@
 | No CLI file creation in test | PASS | Child process run in empty temporary directory; listing unchanged |
 | Raw text rejection | PASS | Unexpected fields and non-synthetic class blocked |
 | Network / production / live account access | NOT TESTED | Not exercised and not authorized; no such implementation in pilot |
-| Codex fresh-session invocation | REVIEW_NOT_RUN | Latest report verifies exact fork/commit/blobs in published Cloud revision 3, with restricted egress enforced and no credentials; tests were stopped solely by immutable-filesystem requirement |
+| Codex independent synthetic execution | REVIEW_NOT_RUN | The latest user-provided Cloud report confirms source blobs/diff but does not prove the effective network restrictions, runtime credential boundary or exclusive tool permissions; no tests run in Cloud |
 | ChatGPT Skill invocation | NOT VERIFIED | No Skill package or installation performed |
 | Human approval and canonical architecture gate | PENDING | Review and separate approval required for any actual integration |
 | Merge / deploy / hooks / schedulers / installed Skills | NO CHANGE | Explicit exclusions |
@@ -94,6 +94,41 @@ The report is user-supplied, not independently authenticated Cloud
 telemetry. Do not publish session IDs, proprietary logs or other
 repositories' identities in this public fork.
 
+## Separate local reproduction — completed
+
+A separate local execution, **not a Codex Cloud review**, reproduced the
+three exact pilot Git blob hashes and ran the complete synthetic Node.js
+test suite under a minimal explicitly set process environment.
+
+- Node.js v22.16.0: **10/10 PASS, 0 FAIL**, exit 0.
+- Synthetic CLI: **2 PROPOSE_REVIEW, 1 NOT_ACTIONABLE**,
+  all `effects: NONE`, exit 0.
+- Pilot script/test/fixture Git blob hashes: unchanged before and after.
+- GitHub PR file comparison: all paths remain under `portenart/`.
+- No real customer data, Skill installations, hooks, writes to the public
+  repo or external integrations were involved in this local execution.
+
+This is evidence of standalone synthetic classifier correctness ONLY.
+It is not evidence of operational Task Observer observation collection,
+CodeX session-start activation, or real-data integration.
+
+## Most recent Codex Cloud attempt — unresolved environment attestation
+
+The latest user-supplied Cloud report verifies the intended repository,
+pilot blobs and bounded source diff but stops before tests: effective
+network restriction status is not demonstrably enforced, and the runtime
+credential/tool boundary is not certifiable from the available evidence.
+The mere presence of a credential variable **name** is not evidence of a
+usable secret, and available agent-side connectors are not proof they were
+invoked. Conversely, their existence cannot be treated as a verified
+isolation boundary.
+
+Mark `CLOUD_SYNTHETIC_TESTS=NOT_RUN`; do not upgrade to
+`CLOUD_REVIEW_PASS`. Stop repeating the same Cloud preflight until its
+isolation controls can be verified through platform configuration and
+runtime evidence. Avoid copying any user-specific environment identifiers
+or credentials into this public repository.
+
 ## Gate for next phase
 
 A reviewer must verify: (a) the public/private data boundary; (b) absence of a
@@ -102,4 +137,4 @@ new isolated session; (d) a private evidence and retention model if real
 signals are ever permitted; and (e) an independent diff / non-regression
 check. No test in this document proves an always-running observer.
 
-**Decision: CLOUD_SYNTHETIC_TESTS_PENDING; BOUNDED_TESTS_ALLOWED under the corrected temporary-write rule; INTEGRATION_NO_GO and ACTIVATION_NO_GO.**
+**Decision: LOCAL_SYNTHETIC_TESTS=PASS; CODEX_CLOUD_REVIEW=REVIEW_NOT_RUN (environment controls unverifiable); TRUE_OBSERVER_RUNTIME=NOT_TESTED; INTEGRATION_NO_GO; ACTIVATION_NO_GO.**
