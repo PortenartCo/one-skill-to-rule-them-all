@@ -45,9 +45,12 @@ claiming it was enforced. Do not bypass a denial to finish the task.
 0. **Preflight / STOP ON WRONG CHECKOUT:** run only the non-mutating
    repository/branch and workspace-identity checks specified in
    [CODEX_CLOUD_ENVIRONMENT_SETUP.md](CODEX_CLOUD_ENVIRONMENT_SETUP.md).
-   If another repository is mounted, the target repo is missing, or the
-   exact branch cannot be checked, STOP with `REVIEW_NOT_RUN`. Fetching
-   the mission from GitHub does not substitute for a real checkout.
+   If another repository is mounted or the target repo is missing, STOP
+   with `REVIEW_NOT_RUN`. A temporary task branch (e.g. `work`) or
+   detached HEAD is acceptable ONLY when the sanitized origin and exact
+   pilot file blobs prove the intended source; follow the checks in the
+   setup document. If provenance is unverified, STOP. Fetching mission
+   files from GitHub cannot substitute for a real checkout.
 1. Record the repository, HEAD SHA, branch, session environment and any
    available new-task identifier. If not verified, say so.
 2. Check `git status --porcelain` BEFORE running tests. Diff against the
