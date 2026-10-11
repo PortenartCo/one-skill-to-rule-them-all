@@ -130,6 +130,10 @@ isolation controls can be verified through platform configuration and
 runtime evidence. Avoid copying any user-specific environment identifiers
 or credentials into this public repository.
 
+## Prochain protocole d'invocation par agent
+
+Le seul jalon restant avant de pouvoir juger un usage reel de Task Observer est un test d'agent **explicitement opt-in**, avec deux sessions sur des corrections totalement fictives, aucune Skill installee et un stockage prive approuve. Le [protocole de prochaine phase](evaluations/OPT_IN_AGENT_SESSION_PILOT.md) est prepare, mais **non execute**. Il ne certifie ni hook global ni detection autonome.
+
 ## Gate for next phase
 
 A reviewer must verify: (a) the public/private data boundary; (b) absence of a
