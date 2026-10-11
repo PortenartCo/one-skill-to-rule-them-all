@@ -48,7 +48,7 @@ test('non synthetic event blocks and withholds identifier', () => {
 
 test('unknown text and extra fields rejected instead of being echoed', () => {
   assert.throws(() => assessObservation(sample({ transcript: 'private example' })), /UNKNOWN_FIELD/);
-  assert.throws(() => assessObservation(sample({ case_id: 'USER-EMAIL@EXAMPLE.COM' })), /INVALID_CASE_ID/);
+  assert.throws(() => assessObservation(sample({ case_id: 'REAL_IDENTIFIER' })), /INVALID_CASE_ID/);
 });
 
 test('invalid schema and oversized batches rejected', () => {
